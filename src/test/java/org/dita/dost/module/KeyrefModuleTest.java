@@ -33,10 +33,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.dita.dost.TestUtils;
 import org.dita.dost.TestUtils.TestLogger;
 import org.dita.dost.module.KeyrefModule.ResolveTask;
+import org.dita.dost.store.StreamStore;
 import org.dita.dost.util.Job;
 import org.dita.dost.util.Job.FileInfo.Builder;
 import org.dita.dost.util.KeyDef;
 import org.dita.dost.util.KeyScope;
+import org.dita.dost.util.XMLUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,7 +61,7 @@ public class KeyrefModuleTest {
         tempDir = createTempDir(KeyrefModuleTest.class);
 
         module = new KeyrefModule();
-        final Job job = new Job(tempDir);
+        final Job job = new Job(tempDir, new StreamStore(tempDir, new XMLUtils()));
         job.setInputDir(new File(baseDir, "xsrc").toURI());
         job.setInputMap(URI.create("test.ditamap"));
         job.add(new Job.FileInfo.Builder()
